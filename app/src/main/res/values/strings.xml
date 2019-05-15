@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Efisiensi Agen</string>
+    <string name="efisiensi">Efisiensi</string>
+    <string name="title_activity_login">Sign in</string>
+    <!-- Strings related to login -->
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign In</string>
+    <string name="booking_title">Pemesanan Tiket</string>
+    <string name="kota_keberangkatan">Kota Keberangkatan</string>
+    <string name="kota_tujuan">Kota Tujuan</string>
+    <string name="tanggal_berangkat">Tanggal Keberangkatan</string>
+    <string name="jumlah_pemesan">Jumlah Pemesan</string>
+</resources>
