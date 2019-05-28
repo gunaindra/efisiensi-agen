@@ -2,12 +2,13 @@ package com.busefisensi.efisiensiagen.Model;
 
 public class User {
 
-    private String username, nama, nik, agen;
+    private String username, nama, nip, agen, token;
 
-    public User(String nama, String nik, String agen){
+    public User(String nama, String nip, String agen, String token){
         this.nama = nama;
-        this.nik = nik;
+        this.nip = nip;
         this.agen = agen;
+        this.token = token;
     }
 
     public String getUsername() {
@@ -26,12 +27,12 @@ public class User {
         this.nama = nama;
     }
 
-    public String getNik() {
-        return nik;
+    public String getNip() {
+        return nip;
     }
 
-    public void setNik(String nik) {
-        this.nik = nik;
+    public void setNip(String nip) {
+        this.nip = nip;
     }
 
     public String getAgen() {

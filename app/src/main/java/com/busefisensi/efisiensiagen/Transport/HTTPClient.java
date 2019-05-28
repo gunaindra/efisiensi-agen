@@ -25,9 +25,9 @@ public class HTTPClient {
                 }
         });
     }
-    public static void sendHTTPGETJSON(String url, final Callback callback) {
+    public static void sendHTTPGETJSON(String token, String url, final Callback callback) {
         OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder().url(url).get().build();
+        Request request = new Request.Builder().header("Authorization", token).url(url).get().build();
 
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override

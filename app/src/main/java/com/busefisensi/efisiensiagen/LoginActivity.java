@@ -11,18 +11,14 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.busefisensi.efisiensiagen.Constant.URL;
-import com.busefisensi.efisiensiagen.Database.SPUser;
+import com.busefisensi.efisiensiagen.Database.SharedPrefUser;
 import com.busefisensi.efisiensiagen.Model.User;
 import com.busefisensi.efisiensiagen.Transport.RequestHandler;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.logging.StreamHandler;
 
 /**
  * A login screen that offers login via email/password.
@@ -37,6 +33,13 @@ public class LoginActivity extends AppCompatActivity {
 
         et_username = findViewById(R.id.et_username);
         et_password = findViewById(R.id.et_password);
+
+        SharedPrefUser sharedPrefUser = new SharedPrefUser(getApplicationContext());
+//        if (sharedPrefUser.getIsLogin()){
+//            startActivity(new Intent(LoginActivity.this, HomeActivity.class)
+//            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+//            finish();
+//        }
 
         findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,11 +88,13 @@ public class LoginActivity extends AppCompatActivity {
 
                         JSONObject userJson = obj.getJSONObject("user");
 
-                        User user = new User(
-                                userJson.getString("nama"),
-                                userJson.getString("nip"),
-                                userJson.getString("agen")
-                        );
+//                        User user = new User(
+//                                userJson.getString("nama"),
+//                                userJson.getString("nip"),
+//                                userJson.getString("agen"),
+//                                obj.getString("token")
+//
+//                        );
 
 //                        List<User> users = new ArrayList<>();
 //                        for (int i=0; i <userJson.length(); i++){
@@ -100,10 +105,14 @@ public class LoginActivity extends AppCompatActivity {
 //                            user.setAgen(userObj.getString("agen"));
 //                            users.add(user);
 //                        }
+                    SharedPrefUser sharedPrefUser = new SharedPrefUser(LoginActivity.this);
+                    sharedPrefUser.setNama(userJson.getString("nama"));
+                    sharedPrefUser.setAgen(userJson.getString("agen"));
+                    sharedPrefUser.setNip(userJson.getString("nip"));
+                    sharedPrefUser.setToken(obj.getString("token"));
+                    sharedPrefUser.setIsLogin(true);
 
-                        SPUser.getInstance(getApplicationContext()).userLogin(user);
-
-                        finish();
+                    finish();
                         startActivity(new Intent(getApplicationContext(), HomeActivity.class));
 
                 } catch (JSONException e){
@@ -118,7 +127,8 @@ public class LoginActivity extends AppCompatActivity {
                 params.put("username", username);
                 params.put("password", password);
 
-                return requestHandler.sendPostRequest(URL.LOGINURL, params);
+
+                return requestHandler.sendPostRequest(URL.LOGINURL.get(), params);
             }
         }
 

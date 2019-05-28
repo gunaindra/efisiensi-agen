@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cv_layout">
+
+    <android.support.design.card.MaterialCardView
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@drawable/cv_city"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:text="Purwokerto"
+            />
+
+        <TextView
+            android:id="@+id/tv_agent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agent Port"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            />
+
+        <TextView
+            android:id="@+id/tv_agent_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="Agent Port Address"/>
+
+    </LinearLayout>
+
+    </android.support.design.card.MaterialCardView>
+
+</LinearLayout>

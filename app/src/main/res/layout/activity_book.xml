@@ -47,24 +47,18 @@
             android:text="@string/kota_keberangkatan"
             android:fontFamily="sans-serif-medium"/>
 
-        <android.support.design.widget.TextInputLayout
+        <Button
+            android:id="@+id/btn_keberangkatan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_et"
+            android:text="Purwokerto"
+            android:textAlignment="textStart"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp">
-
-            <EditText
-                android:id="@+id/et_kotaKeberangkatan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:hint="@string/kota_keberangkatan"
-                android:drawableEnd="@drawable/play_arrow"
-                android:background="@drawable/rounded_et"/>
-
-        </android.support.design.widget.TextInputLayout>
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="8dp"
+            android:drawableEnd="@drawable/play_arrow"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -75,24 +69,18 @@
             android:text="@string/kota_tujuan"
             android:fontFamily="sans-serif-medium"/>
 
-        <android.support.design.widget.TextInputLayout
+
+        <Button
+            android:id="@+id/btn_tujuan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:background="@drawable/rounded_et"
+            android:textAlignment="textStart"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp">
-
-            <EditText
-                android:id="@+id/et_kotaTujuan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:hint="@string/kota_tujuan"
-                android:drawableEnd="@drawable/play_arrow"
-                android:background="@drawable/rounded_et"/>
-
-        </android.support.design.widget.TextInputLayout>
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="8dp"
+            android:drawableEnd="@drawable/play_arrow"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -103,24 +91,18 @@
             android:text="@string/tanggal_berangkat"
             android:fontFamily="sans-serif-medium"/>
 
-        <android.support.design.widget.TextInputLayout
+
+        <Button
+            android:id="@+id/btn_tglPemesanan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:textAlignment="textStart"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp">
-
-            <EditText
-                android:id="@+id/et_tglPemesanan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:hint="@string/tanggal_berangkat"
-                android:drawableEnd="@drawable/calendar"
-                android:background="@drawable/rounded_et"/>
-
-        </android.support.design.widget.TextInputLayout>
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:padding="8dp"
+            android:drawableEnd="@drawable/calendar"
+            android:background="@drawable/rounded_et"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -145,6 +127,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:hint="@string/jumlah_pemesan"
+                android:inputType="number"
                 android:drawableEnd="@drawable/seat"
                 android:background="@drawable/rounded_et"/>
 
