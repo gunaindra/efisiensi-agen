@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#EFEFEF"
+    android:paddingBottom="8dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="8dp"
+    tools:context=".BookingSeatActivity">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cvSeat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorPrimary"
+        android:layout_margin="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+            <ImageView
+                android:id="@+id/ivSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/calendar_white"/>
+
+            <TextView
+                android:id="@+id/tvKodebus"
+                android:layout_toEndOf="@id/ivSign"
+                android:layout_alignTop="@id/ivSign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="sans-serif-medium"
+                android:text="Kode Bus PWT 6000"/>
+
+            <TextView
+                android:id="@+id/tvJmlPenumpang"
+                android:layout_toEndOf="@id/ivSign"
+                android:layout_below="@+id/tvKodebus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/colorWhite"
+                android:fontFamily="sans-serif"
+                android:text="Jumlah Penumpang : 2"/>
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+    <ScrollView
+
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/btnSubmitSeat"
+        android:layout_below="@id/cvSeat"
+        android:id="@+id/svSeat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_centerInParent="true">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_seat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/btnSubmitSeat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_rounded"
+        android:textColor="@color/colorWhite"
+        android:layout_alignParentBottom="true"
+        android:text="Pilih Kursi"/>
+
+</RelativeLayout>

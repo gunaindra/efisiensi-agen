@@ -13,7 +13,9 @@ import com.busefisensi.efisiensiagen.Constant.RequestCode;
 import com.busefisensi.efisiensiagen.Constant.URL;
 import com.busefisensi.efisiensiagen.Database.SharedPrefUser;
 import com.busefisensi.efisiensiagen.Model.Agent;
+import com.busefisensi.efisiensiagen.Model.Schedule;
 import com.busefisensi.efisiensiagen.Transport.HTTPClient;
+import com.busefisensi.efisiensiagen.Util.DateUtil;
 import com.busefisensi.efisiensiagen.Util.StringUtil;
 import com.javasoul.swframework.component.SWDialog;
 
@@ -21,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +37,7 @@ public class BookingActivity extends AppCompatActivity {
     private Integer idKota;
     private EditText etKeberangkatan;
     private Button btnKeberangkatan;
+    private Button btnSchedule;
     private Button btnTujuan;
     private Button btnTglKeberangkatan;
     private Button btnNextBook;
@@ -44,7 +48,7 @@ public class BookingActivity extends AppCompatActivity {
     private String date;
     private String dateBeautify;
     private String hour;
-
+    private Schedule schedule;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,7 @@ public class BookingActivity extends AppCompatActivity {
         btnTujuan = findViewById(R.id.btn_tujuan);
         btnTglKeberangkatan = findViewById(R.id.btn_tglPemesanan);
         btnNextBook = findViewById(R.id.btn_nextbook);
+        btnSchedule = findViewById(R.id.btn_Schedule);
 
         etJumlahPemesan = findViewById(R.id.et_jumlahPemesan);
         getKota();
@@ -86,12 +91,7 @@ public class BookingActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        List<Agent>  agents = new ArrayList<>();
-                        Agent agent = new Agent();
-                        agent.setId(idKota);
-                        agents.add(agent);
-                        HashMap<String, Object> data = new HashMap<>();
-                        data.put("agents", agents);
+                        Log.d("idKota", "idnya" + idKota);
                         btnKeberangkatan.setText(kota);
 
                     }
@@ -143,11 +143,57 @@ public class BookingActivity extends AppCompatActivity {
             }
         });
 
+        btnSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(validate(agentDeparture, agentDestination, date)){
+                    Intent intent = new Intent(BookingActivity.this, ScheduleActivity.class);
+                    intent.putExtra("agentOrigin", agentDeparture.getId().toString());
+                    intent.putExtra("agentOriginName", btnKeberangkatan.getText());
+                    intent.putExtra("agentDestination", agentDestination.getId().toString());
+                    intent.putExtra("date", date);
+                    intent.putExtra("datebeautify", btnTglKeberangkatan.getText());
+                    intent.putExtra("jumlahPenumpang", etJumlahPemesan.getText().toString());
+                    startActivityForResult(intent, RequestCode.CHOOSE_SCHEDULE.get());
+                } else if(validate(agentDestination, date)){
+                    Intent intent = new Intent(BookingActivity.this, ScheduleActivity.class);
+                    intent.putExtra("agentOrigin", idKota.toString());
+                    intent.putExtra("agentOriginName", btnKeberangkatan.getText());
+                    intent.putExtra("agentDestination", agentDestination.getId().toString());
+                    intent.putExtra("date", date);
+                    intent.putExtra("datebeautify", btnTglKeberangkatan.getText());
+                    intent.putExtra("jumlahPenumpang", etJumlahPemesan.getText().toString());
+                    startActivityForResult(intent, RequestCode.CHOOSE_SCHEDULE.get());
+                }
+                else {
+                    SWDialog.warning(BookingActivity.this, "Validation", "Pastikan Kota Keberangkatan, Kota Tujuan dan Tanggal sudah dipilih");
+                }
+            }
+        });
+
         btnNextBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validate(agentDestination, date) && etJumlahPemesan.getText() != null){
-                    Intent intent = new Intent();
+                if(validate(agentDeparture, agentDestination, date, schedule) && etJumlahPemesan.getText() != null){
+                    Intent intent = new Intent(BookingActivity.this, BookingSeatActivity.class);
+                    intent.putExtra("agentOrigin", agentDeparture.getId().toString());
+                    intent.putExtra("agentOriginName", btnKeberangkatan.getText());
+                    intent.putExtra("agentDestination", agentDestination.getId().toString());
+                    intent.putExtra("date", date);
+                    intent.putExtra("datebeautify", btnTglKeberangkatan.getText());
+                    intent.putExtra("schedule", schedule.getId().toString());
+                    intent.putExtra("jumlahPenumpang", etJumlahPemesan.getText().toString());
+                    startActivity(intent);
+                } else if(validate(agentDestination, date, schedule) && etJumlahPemesan.getText() != null){
+                    Intent intent = new Intent(BookingActivity.this, BookingSeatActivity.class);
+                    intent.putExtra("agentOrigin", idKota.toString());
+                    intent.putExtra("agentOriginName", btnKeberangkatan.getText());
+                    intent.putExtra("agentDestination", agentDestination.getId().toString());
+                    intent.putExtra("date", date);
+                    intent.putExtra("datebeautify", btnTglKeberangkatan.getText());
+                    intent.putExtra("schedule", schedule.getId().toString());
+                    intent.putExtra("jumlahPenumpang", etJumlahPemesan.getText().toString());
+                    startActivity(intent);
                 }
                 else {
                     SWDialog.warning(BookingActivity.this, "Validation", "Pastikan Kota Keberangkatan, Kota Tujuan dan Tanggal sudah dipilih");
@@ -181,6 +227,10 @@ public class BookingActivity extends AppCompatActivity {
             day = data.getStringExtra("day");
             dateBeautify = date + " " + month.substring(0, 3) + " " + year;
             btnTglKeberangkatan.setText(dateBeautify);
+        } else if (requestCode == RequestCode.CHOOSE_SCHEDULE.get() && data != null){
+            schedule = data.getParcelableExtra("schedule");
+            hour = DateUtil.getHourFromDateString(schedule.getUpTime());
+            btnSchedule.setText(hour);
         }
     }
 

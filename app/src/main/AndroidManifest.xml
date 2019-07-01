@@ -27,6 +27,8 @@
         <activity android:name=".BookingActivity"/>
         <activity android:name=".AgentActivity"/>
         <activity android:name=".CalendarActivity"/>
+        <activity android:name=".ScheduleActivity"/>
+        <activity android:name=".BookingSeatActivity"/>
     </application>
 
 </manifest>

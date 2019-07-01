@@ -38,6 +38,26 @@ public class Parser {
 
         return result;
     }
+
+    public SWResult scheduleParser() {
+        SWResult result = defaultParser();
+        if(result.getResult()) {
+            ScheduleParser scheduleParser = new ScheduleParser(responseBody);
+            return scheduleParser.getResult();
+        }
+
+        return result;
+    }
+
+    public SWResult seatParser(){
+        SWResult result = defaultParser();
+        if(result.getResult()){
+            SeatParser seatParser = new SeatParser(responseBody);
+            return seatParser.getResult();
+        }
+        return result;
+    }
+
     private SWResult defaultParser() {
         try {
             int code = response.code();
