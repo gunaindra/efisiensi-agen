@@ -6,8 +6,9 @@ public enum URL {
     DEPOSIT("http://rbt.arutala.co.id/efisiensi-agen/v1/deposit"),
     AGEN("http://rbt.arutala.co.id/efisiensi-agen/v1/agen"),
     AGENT_ORIGIN("http://rbt.arutala.co.id/efisiensi-agen/v1/agen/naik"),
-    AGENT_DESTINATION("http://rbt.arutala.co.id/efisiensi-agen/v1/agen/turun/");
-
+    AGENT_DESTINATION("http://rbt.arutala.co.id/efisiensi-agen/v1/agen/turun/"),
+    SCHEDULE("http://rbt.arutala.co.id/efisiensi-agen/v1/jadwal/agen/"),
+    SEAT("http://rbt.arutala.co.id/efisiensi-agen/v1/jadwal/");
     String url;
     URL(String url) {
         this.url = url;

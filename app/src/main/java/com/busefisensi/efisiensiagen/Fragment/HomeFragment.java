@@ -23,6 +23,7 @@ import com.busefisensi.efisiensiagen.Parser.Parser;
 import com.busefisensi.efisiensiagen.R;
 import com.busefisensi.efisiensiagen.Transport.HTTPClient;
 import com.busefisensi.efisiensiagen.Util.StringUtil;
+import com.javasoul.swframework.component.SWToast;
 import com.javasoul.swframework.model.SWResult;
 
 import org.json.JSONException;
@@ -46,6 +47,8 @@ public class HomeFragment extends Fragment {
     private GridLayoutManager lLayout;
     private List<Deposit> deposits = new ArrayList<>();
     String deposit;
+    String idkota;
+    String namaAgen;
 
     public static HomeFragment newInstance(){
         HomeFragment fragment = new HomeFragment();
@@ -77,6 +80,7 @@ public class HomeFragment extends Fragment {
                         switch (position){
                             case 0:
                                 Intent intent = new Intent(getContext(), BookingActivity.class);
+                                intent.putExtra("agentOrigin", idkota);
                                 startActivity(intent);
                                 break;
                         }
@@ -114,7 +118,7 @@ public class HomeFragment extends Fragment {
         String token = sharedPrefUser.getToken().toString();
 //        String url = URL.DEPOSIT;
 
-       HTTPClient.sendHTTPGETJSON(token, URL.DEPOSIT.get(), new Callback() {
+       HTTPClient.sendHTTPGETJSON(token, URL.AGEN.get(), new Callback() {
            @Override
            public void onFailure(Call call, IOException e) {
 
@@ -125,7 +129,10 @@ public class HomeFragment extends Fragment {
                final String responseData = response.body().string();
                try {
                    JSONObject jsonObject = new JSONObject(responseData);
-                   deposit = jsonObject.getString("deposit");
+                   JSONObject jsonAgen = jsonObject.getJSONObject("agen");
+                   idkota = jsonAgen.getString("id");
+                   namaAgen = jsonAgen.getString("nama");
+                   deposit = jsonAgen.getString("deposit");
                }catch (JSONException e){
                    e.printStackTrace();
                }
@@ -134,6 +141,7 @@ public class HomeFragment extends Fragment {
                    public void run() {
                        TextView tvdeposit = getView().findViewById(R.id.tvDeposit);
                        tvdeposit.setText(StringUtil.getPriceInRupiahFormat(Long.parseLong(deposit)));
+//                       SWToast.showLongSuccess("Selamat Datang " + namaAgen.toString());
                    }
                });
            }
